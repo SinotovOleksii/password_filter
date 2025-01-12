@@ -7,27 +7,6 @@
 #include <locale>    // For handling locales
 #include <codecvt>   // For conversion between character types
 
-std::unordered_map<wchar_t, wchar_t> ruToEnMap = {
-        {L'ё', L'`'}, {L'Ё', L'~'},
-        {L'й', L'q'}, {L'ц', L'w'}, {L'у', L'e'}, {L'к', L'r'}, {L'е', L't'}, {L'н', L'y'}, {L'г', L'u'}, {L'ш', L'i'}, {L'щ', L'o'}, {L'з', L'p'}, {L'х', L'['}, {L'ъ', L']'}, 
-        {L'ф', L'a'}, {L'ы', L's'}, {L'в', L'd'}, {L'а', L'f'}, {L'п', L'g'}, {L'р', L'h'}, {L'о', L'j'}, {L'л', L'k'}, {L'д', L'l'}, {L'ж', L';'}, {L'э', L'\''}, {L'\\', L'\\'},
-        {L'я', L'z'}, {L'ч', L'x'}, {L'с', L'c'}, {L'м', L'v'}, {L'и', L'b'}, {L'т', L'n'}, {L'ь', L'm'}, {L'б', L','}, {L'ю', L'.'}, {L'.', L'/'}, 
-        {L'!', L'!'}, {L'"', L'@'}, {L'№', L'#'}, {L';', L'$'}, {L'%', L'%'}, {L':', L'^'}, {L'?', L'&'}, {L'*', L'*'}, {L'(', L'('}, {L')', L')'}, {L'_', L'_'}, {L'+', L'+'},
-        {L'Й', L'Q'}, {L'Ц', L'W'}, {L'У', L'E'}, {L'К', L'R'}, {L'Е', L'T'}, {L'Н', L'Y'}, {L'Г', L'U'}, {L'Ш', L'I'}, {L'Щ', L'O'}, {L'З', L'P'}, {L'Х', L'{'}, {L'Ъ', L'}'}, 
-        {L'Ф', L'A'}, {L'Ы', L'S'}, {L'В', L'D'}, {L'А', L'F'}, {L'П', L'G'}, {L'Р', L'H'}, {L'О', L'J'}, {L'Л', L'K'}, {L'Д', L'L'}, {L'Ж', L':'}, {L'Э', L'\"'}, {L'/', L'|'},
-        {L'Я', L'Z'}, {L'Ч', L'X'}, {L'С', L'C'}, {L'М', L'V'}, {L'И', L'B'}, {L'Т', L'N'}, {L'Ь', L'M'}, {L'Б', L'<'}, {L'Ю', L'>'}, {L',', L'?'}, 
-    };
-std::unordered_map<wchar_t, wchar_t> uaToEnMap = {
-        {L'\'', L'`'}, {L'₴', L'~'},
-        {L'й', L'q'}, {L'ц', L'w'}, {L'у', L'e'}, {L'к', L'r'}, {L'е', L't'}, {L'н', L'y'}, {L'г', L'u'}, {L'ш', L'i'}, {L'щ', L'o'}, {L'з', L'p'}, {L'х', L'['}, {L'ї', L']'}, 
-        {L'ф', L'a'}, {L'і', L's'}, {L'в', L'd'}, {L'а', L'f'}, {L'п', L'g'}, {L'р', L'h'}, {L'о', L'j'}, {L'л', L'k'}, {L'д', L'l'}, {L'ж', L';'}, {L'є', L'\''}, {L'\\', L'\\'},
-        {L'я', L'z'}, {L'ч', L'x'}, {L'с', L'c'}, {L'м', L'v'}, {L'и', L'b'}, {L'т', L'n'}, {L'ь', L'm'}, {L'б', L','}, {L'ю', L'.'}, {L'.', L'/'}, 
-        {L'!', L'!'}, {L'"', L'@'}, {L'№', L'#'}, {L';', L'$'}, {L'%', L'%'}, {L':', L'^'}, {L'?', L'&'}, {L'*', L'*'}, {L'(', L'('}, {L')', L')'}, {L'_', L'_'}, {L'+', L'+'},
-        {L'Й', L'Q'}, {L'Ц', L'W'}, {L'У', L'E'}, {L'К', L'R'}, {L'Е', L'T'}, {L'Н', L'Y'}, {L'Г', L'U'}, {L'Ш', L'I'}, {L'Щ', L'O'}, {L'З', L'P'}, {L'Х', L'{'}, {L'Ї', L'}'}, 
-        {L'Ф', L'A'}, {L'І', L'S'}, {L'В', L'D'}, {L'А', L'F'}, {L'П', L'G'}, {L'Р', L'H'}, {L'О', L'J'}, {L'Л', L'K'}, {L'Д', L'L'}, {L'Ж', L':'}, {L'Є', L'\"'}, {L'/', L'|'},
-        {L'Я', L'Z'}, {L'Ч', L'X'}, {L'С', L'C'}, {L'М', L'V'}, {L'И', L'B'}, {L'Т', L'N'}, {L'Ь', L'M'}, {L'Б', L'<'}, {L'Ю', L'>'}, {L',', L'?'}, 
-    };
-
 // Forward declaration of functions in your DLL
 extern "C" {
     __declspec(dllimport) BOOLEAN PasswordFilter(
@@ -214,43 +193,5 @@ int main() {
         // Clean up allocated password string
         DeleteUnicodeString(password);
     }
-    // std::string password1 = "QqQq100500";
-    // std::string password3 = "ЙйЙй100500";
-    // std::wstring widePass = StringToWString(password3);
-    // std::cout << "std:string " << password3 << std::endl;
-    // //std::wcout << L"std::wstr " << widePass << std::endl;
-    // //std::cout << std::endl << "end with " << widePass.length() << std::endl;
-    // std::wcout << L"Hexadecimal representation of the wide string:" << std::endl;
-    // for (const auto& ch : widePass) {
-    //     // Print each character's hex value
-    //     std::wcout << std::hex << L"0x" << (int)ch << L" "; // cast to int for proper output
-    // }
-    // std::wcout << std::endl; // New line after hex output
-
-    // auto password = CreateUnicodeString(password1);
-    // if (PasswordFilter(accountName, fullName, password, TRUE)) {
-    //          std::wcout << L"Password accepted: " << StringToWString(password1) << std::endl;
-    //      } else {
-    //          std::wcerr << L"Password rejected: " << StringToWString(password1) << std::endl;
-    // }
-    // std::wcout << L"Second pass test: "  << std::endl;
-    // password = CreateUnicodeString(password3);
-    // if (PasswordFilter(accountName, fullName, password, TRUE)) {
-    //          std::wcout << L"Password accepted: " << StringToWString(password3) << std::endl;
-    //      } else {
-    //          std::wcerr << L"Password rejected: " << StringToWString(password3) << std::endl;
-    // }
-    // Clean up allocated strings
-    // DeleteUnicodeString(accountName);
-    // DeleteUnicodeString(fullName);
-
-    // std::wcout << L"Program exited." << std::endl;
-    // return 0;
-
-    //std::string passwordStr = "ЙйЙй100500"; // Hardcoded password with Cyrillic input
-
-    // Clean up
-
-
     return 0;
 }
